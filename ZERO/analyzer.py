@@ -17,20 +17,14 @@ def data_summery(df):
     print(f"Duplicates: {duplicates}")
 
 def column_type_report(df):
-    print(f"COLUMN TYPE REPORT")
-    if df.dtypes == "object":
-        print(f"Transection ID: {df.columns}")
-        print(f"Items: {df.dtypes}")
-        print(f"Location: {df.columns}")
-    elif df.dtypes == "Integer":
-        print(f"Quantity: {df.columns}")
-    elif df.dtypes == "Float":
-        print(f"Price: {df.columns}")
-        print(f"TotalSpent: {df.columns}")
-    else:
-        print(f"Type: {df.dtypes}")
+    print("\nCOLUMN TYPE REPORT")
+    print("--------------------")
 
-    return df
+    for column in df.columns:
+
+        print(
+            f"{column} : {df[column].dtype}"
+        )
 
 
 from datat_loader import load_data
@@ -38,3 +32,5 @@ from datat_loader import load_data
 df = load_data("cafe_sales.csv")
 
 data_summery(df)
+
+column_type_report(df)
