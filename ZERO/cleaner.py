@@ -1,51 +1,102 @@
 def handle_missing_values(df):
 
-    print(
-        "\nMISSING VALUE HANDLER"
-    )
-    print(
-        "Choose how to handle missing values"
-    )
-    print(
-        "1. Remove Rows"
-    )
-    print(
-        "2. Fill text columns with 'Unknown'"
-    )
-    print(
-        "3. Fill Numeric columns with Median"
-    )
-    print(
-        "4. Skip"
-    )
+    if df is None:
+        print(f"❌ No Dataset Loaded.")
+        return
 
-    choice = input(
-        "Enter Choice (1-4): "
-    )
+    print("\n" + "=" * 50)
+    print("              ZERO CLEANER")
+    print("=" * 50)
+
+    print("\n✅ Missing Values Detected")
+    print("Please choose how ZERO should handle them:\n")
+
+    print("[1] Remove Rows With Missing Values")
+    print("    Recommended when dataset is large.\n")
+
+    print("[2] Fill Text Columns With 'Unknown'")
+    print("    Recommended for categorical columns.\n")
+
+    print("[3] Fill Numeric Columns With Median")
+    print("    Recommended for numerical analysis.\n")
+
+    print("[4] Skip Cleaning")
+    print("    Continue without modifying the data.\n")
+
+    while True:
+        choice = input(
+            "\n Enter Choice (1-4): "
+        )
+
+        if choice in ["1", "2", "3", "4"]:
+            break
+        print(
+            "\n❌ Invalid Choice. Please try again.\n"
+        )
+        print(
+            "Please Enter any Number between 1-4: ",
+        )
 
     if choice == "1":
         print(
-            f"Removing Rows..."
+            "\n✅ Option Selected"
+        )
+        print(
+            "ZERO will attempt to remove incomplete rows"
         )
     elif choice == "2":
         print(
-            f"Fill text columns with Selected"
+            "\n✅ Option Selected"
         )
+        print(
+            "ZERO will replace missing text values with 'Unknown'"
+        )
+
+        text_columns = df.select_dtypes(
+            include = ["object"]
+        ).columns
+
+        for column in text_columns:
+            df[column] = df[column].fillna("Unknown")
     elif choice == "3":
         print(
-            f"Fill Numeric columns with Selected"
+            "\n✅ Option Selected"
         )
+        print(
+            "ZERO will replace missing numeric Values with selected"
+        )
+
     elif choice == "4":
         print(
-            f"Skipping Cleaning"
+            "\n✅ Option Selected"
+        )
+        print(
+            "You have Skipped the Operation"
         )
     else:
         print(
             f"Invalid Choice"
         )
 
+
+
+
+
+
 from datat_loader import load_data
 
-df = load_data("cafe-sales.csv")
+df = load_data("cafe_sales.csv")
 
 handle_missing_values(df)
+
+print("\n✅ Cleaning Completed")
+
+print(
+    "\nUpdated Missing Values Report"
+)
+
+print(
+    df.isnull().sum()
+)
+
+print(f"Thank You for using Cleaner")

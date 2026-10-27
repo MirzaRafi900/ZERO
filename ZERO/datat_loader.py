@@ -18,6 +18,8 @@ def load_data(file_path):
             f"Error: {e}"
         )
 
+        return None
+
 if __name__ == "__main__":
     df = load_data("cafe_sales.csv")
 
