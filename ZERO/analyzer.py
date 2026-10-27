@@ -34,6 +34,13 @@ def missing_value_report(df):
     if df.isnull().values.any():
         print(f"Missing Values: {df.isnull().values.sum()}")
 
+def duplicate_report(df):
+    print("\nDUPLICATE REPORT")
+    print("--------------------")
+
+    if df.duplicated().values.any():
+        print(f"Duplicates: {df.duplicated().values.sum()}")
+
 from datat_loader import load_data
 
 df = load_data("cafe_sales.csv")
@@ -46,3 +53,6 @@ column_type_report(df)
 missing_value_report(df)
 
 print(df.isnull().sum())
+
+duplicate_report(df)
+print(df.duplicated().sum())
