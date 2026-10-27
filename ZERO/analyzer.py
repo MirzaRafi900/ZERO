@@ -26,6 +26,13 @@ def column_type_report(df):
             f"{column} : {df[column].dtype}"
         )
 
+def missing_value_report(df):
+
+    print("\nMISSING VALUE REPORT")
+    print("--------------------")
+
+    if df.isnull().values.any():
+        print(f"Missing Values: {df.isnull().values.sum()}")
 
 from datat_loader import load_data
 
@@ -34,3 +41,8 @@ df = load_data("cafe_sales.csv")
 data_summery(df)
 
 column_type_report(df)
+
+
+missing_value_report(df)
+
+print(df.isnull().sum())

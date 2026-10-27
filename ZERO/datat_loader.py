@@ -22,4 +22,4 @@ if __name__ == "__main__":
     df = load_data("cafe_sales.csv")
 
     if df is not None:
-        print(df.head())
+        print(df.head(10))
