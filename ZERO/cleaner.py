@@ -1,3 +1,19 @@
+import pandas as pd
+
+def numeric_column_conversion(df):
+    numeric_candidate = [
+        "Quantity",
+        "Price Per Unit",
+        "Total Spent",
+    ]
+
+    for column in numeric_candidate:
+
+        df[column] = pd.to_numeric(
+            df[column], errors="coerce"
+        )
+
+
 def handle_missing_values(df):
 
     if df is None:
@@ -58,13 +74,51 @@ def handle_missing_values(df):
 
         for column in text_columns:
             df[column] = df[column].fillna("Unknown")
+
+        print(
+            df.isnull().sum()
+        )
+
     elif choice == "3":
         print(
             "\n✅ Option Selected"
         )
         print(
-            "ZERO will replace missing numeric Values with selected"
+            "ZERO will replace missing numeric Values with Median"
         )
+
+        numeric_column_conversion(df)
+
+        print("\nBEFORE CONVERSION")
+        print(df.dtypes)
+
+        # conversion code here
+
+        print("\nAFTER CONVERSION")
+        print(df.dtypes)
+
+        numeric_columns = df.select_dtypes(
+            include = ["number"]
+        ).columns
+
+        print("\nNumeric Columns Found:")
+
+        print(numeric_columns)
+
+        print(df[["Quantity",
+                  "Price Per Unit",
+                  "Total Spent"]].head(20))
+
+        for column in numeric_columns:
+            median_values = df(column).median()
+            df[column] = df[column].fillna(
+                median_values
+            )
+        print("\n✅ Cleaning Complete")
+
+        print("\nUpdated Missing Vales Report")
+
+        print(df.isnull().sum())
 
     elif choice == "4":
         print(
@@ -93,10 +147,6 @@ print("\n✅ Cleaning Completed")
 
 print(
     "\nUpdated Missing Values Report"
-)
-
-print(
-    df.isnull().sum()
 )
 
 print(f"Thank You for using Cleaner")
